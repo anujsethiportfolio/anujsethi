@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anuj Sethi — Content & Communications</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0d0d0d;
+    --white: #f5f3ee;
+    --red: #e63323;
+    --grey: #888;
+    --light: #ede9e2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 60px;
+    background: rgba(245,243,238,0.92);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--black);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--black);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-text {
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    transform: translateY(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(120px, 18vw, 260px);
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,0,0,0.07);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .hero-tag {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 1.05;
+    font-weight: 400;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-title em { font-style: italic; color: var(--red); }
+
+  .hero-sub {
+    margin-top: 32px;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 540px;
+    color: #555;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--black);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+
+  .btn:hover { background: var(--red); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--black);
+    border: 1px solid var(--black);
+  }
+
+  .btn-ghost:hover { background: var(--black); color: var(--white); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    right: 60px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    writing-mode: vertical-rl;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(0,0,0,0.1);
+    margin: 0 60px;
+  }
+
+  .about {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+  }
+
+  .about-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3vw, 36px);
+    line-height: 1.45;
+    font-weight: 400;
+    position: sticky;
+    top: 120px;
+  }
+
+  .about-text em { font-style: italic; }
+
+  .about-right p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .work { padding: 80px 60px 120px; }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 400;
+  }
+
+  .work-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 48px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -1px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: var(--black); }
+  .tab-btn.active { color: var(--black); border-bottom-color: var(--red); }
+
+  .work-panel { display: none; }
+  .work-panel.active { display: block; }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .work-card {
+    position: relative;
+    background: var(--light);
+    padding: 56px 48px;
+    transition: background 0.3s;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: var(--black);
+  }
+
+  .work-card:hover { background: var(--black); }
+  .work-card:hover .card-title,
+  .work-card:hover .card-company,
+  .work-card:hover .card-desc { color: var(--white); }
+  .work-card:hover .card-tag { background: var(--red); color: var(--white); }
+  .work-card:hover .card-num { color: rgba(255,255,255,0.05); }
+  .work-card:hover .card-desc a { color: rgba(255,255,255,0.75); }
+  .work-card.full-width { grid-column: span 2; min-height: 260px; }
+
+  .card-num {
+    position: absolute;
+    top: 36px; right: 36px;
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.04);
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--white);
+    padding: 5px 12px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+    transition: all 0.3s;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+
+  .card-title a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    transition: border-color 0.2s;
+  }
+
+  .work-card:hover .card-title a { border-bottom-color: rgba(255,255,255,0.3); }
+
+  .card-company {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 14px;
+    transition: color 0.3s;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #666;
+    transition: color 0.3s;
+    max-width: 440px;
+  }
+
+  .card-desc a {
+    color: var(--black);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s;
+  }
+
+  .card-desc a:hover { color: var(--red); }
+
+  .skills {
+    padding: 100px 60px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+    background: var(--light);
+  }
+
+  .skills-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 400;
+    line-height: 1.2;
+    position: sticky;
+    top: 100px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .skill-block {
+    background: var(--white);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+
+  .skill-block:hover { background: var(--red); color: var(--white); }
+  .skill-block:hover .skill-items { color: rgba(255,255,255,0.7); }
+
+  .skill-cat {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .skill-items {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--grey);
+    transition: color 0.2s;
+  }
+
+  .contact {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  .contact-title em { font-style: italic; color: var(--red); }
+  .contact-info { display: flex; flex-direction: column; }
+
+  .contact-item a {
+    font-size: 16px;
+    color: var(--black);
+    text-decoration: none;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contact-item a:hover { color: var(--red); padding-left: 8px; }
+  .contact-item a::after { content: '↗'; font-size: 18px; }
+
+  .contact-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 4px;
+  }
+
+  footer {
+    background: var(--black);
+    color: var(--white);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    .hero { padding: 0 24px 60px; }
+    .hero-bg-text { font-size: 80px; }
+    .about, .work, .skills, .contact { padding: 60px 24px; }
+    .divider { margin: 0 24px; }
+    footer { padding: 40px 24px; flex-direction: column; gap: 16px; text-align: center; }
+    .about { grid-template-columns: 1fr; }
+    .about-text { position: static; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-card.full-width { grid-column: span 1; }
+    .skills { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skills-title { position: static; }
+    .contact { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Anuj Sethi</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-text">ANUJ</div>
+  <p class="hero-tag">Content & Communications · Bengaluru</p>
+  <h1 class="hero-title">Words that <em>move</em> brands forward.</h1>
+  <p class="hero-sub">Hi! I'm a content and communications specialist based in Bengaluru. My work has been about building brands in fintech, enterprise tech, sports, and media, learning to listen first, simplify complexity, and find the most engaging way to say things. But where's all the cool stuff, you ask? Just one scroll below.</p>
+  <div class="hero-cta">
+    <a href="#work" class="btn">See My Work</a>
+    <a href="Anuj_Sethi_Resume.pdf" download class="btn btn-ghost">Download Resume</a>
+  </div>
+  <span class="scroll-hint">Scroll to explore</span>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <p class="about-label">About</p>
+    <h2 class="about-text">I write for people, not just <em>platforms.</em></h2>
+  </div>
+  <div class="about-right reveal">
+    <p>I am a Content and Communications Specialist based in Bengaluru, specializing in building narratives for B2B and consumer brands across Fintech, Enterprise Tech, Sports, and Media. I'm a graduate of Christ University with a BA in Journalism (Honours). I approach storytelling with a reporter's eye for detail and a strategist's focus on impact.</p>
+    <p>My most recent role was at Zensciences Business Solutions, where I led end-to-end communication for global enterprise clients. My toolkit ranges from high-level thought leadership and brand books to sharp paid copy and persuasive pitch narratives. I bridge the gap between complex technical solutions and compelling human stories.</p>
+    <p>Outside of work, I am usually deep in football analysis or exploring cinema of all shapes and sizes. I also enjoy spending time in the kitchen, making dishes that make me feel like a Michelin-star chef, and hitting the gym to work on my fitness and self-esteem.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="section-header reveal">
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+
+  <div class="work-tabs reveal">
+    <button class="tab-btn active" data-tab="social">Social Media</button>
+    <button class="tab-btn" data-tab="paid">Paid Media</button>
+    <button class="tab-btn" data-tab="uiux">UI/UX &amp; SEO</button>
+    <button class="tab-btn" data-tab="pitches">New Business Pitches</button>
+    <button class="tab-btn" data-tab="journalism">Journalism</button>
+  </div>
+
+  <!-- SOCIAL MEDIA -->
+  <div class="work-panel active" id="panel-social">
+    <div class="work-grid">
+      <div class="work-card full-width reveal">
+        <div class="card-num">01</div>
+        <span class="card-tag">Social Media · Fintech</span>
+        <h3 class="card-title"><a href="https://www.linkedin.com/company/terrapay/posts/?feedView=all" target="_blank">TerraPay</a></h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Scaled the global fintech community from 75K to 125K+ followers through data-driven storytelling across various content buckets, including <a href="https://www.linkedin.com/posts/terrapay_terrapay-malaysia-electronicpaymentsinternational-activity-7378779430569086976-_j8v/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdvawABnY309OZQwgrxf5kDNK7vVKJW0hU" target="_blank">regional storytelling</a>, <a href="https://www.linkedin.com/posts/terrapay_terrapay-mothersday-crossborderpayments-activity-7327222787066994688-QRBD/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdvawABnY309OZQwgrxf5kDNK7vVKJW0hU" target="_blank">moment marketing</a>, <a href="https://www.linkedin.com/posts/terrapay_terrapay-fintechstrategy-compliance-activity-7358772099982807040--B6p/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdvawABnY309OZQwgrxf5kDNK7vVKJW0hU" target="_blank">thought leadership</a>, <a href="https://www.linkedin.com/posts/terrapay_terrapay-digitalwallets-financialinclusion-activity-7420370679809728512-7MOL/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdvawABnY309OZQwgrxf5kDNK7vVKJW0hU" target="_blank">product showcase</a>, <a href="https://www.linkedin.com/posts/terrapay-pymnts-global-money-movement-ugcPost-7297502783627214848-6wWd/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdvawABnY309OZQwgrxf5kDNK7vVKJW0hU" target="_blank">corporate advocacy</a> and more. Shaped the launch narrative for <a href="https://www.linkedin.com/posts/terrapay_terrapay-xend-activity-7398655781572796416-9ahR/?utm_source=share&utm_medium=member_desktop&rcm=ACoAADdvawABnY309OZQwgrxf5kDNK7vVKJW0hU" target="_blank">Xend</a>, a first-of-its-kind roaming network for digital wallets.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">02</div>
+        <span class="card-tag">Social Media · Sports</span>
+        <h3 class="card-title"><a href="https://www.instagram.com/bfcsoccerschools/" target="_blank">BFC Soccer Schools</a></h3>
+        <p class="card-company">JSW Bengaluru FC</p>
+        <p class="card-desc">Drove 1M+ impressions and 3,000+ followers in 4 months. Built LinkedIn and YouTube from zero, produced player interviews with legends like Sunil Chhetri and Gurpreet Singh Sandhu, reaching 100K+ views, and covered live events and tournaments.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">03</div>
+        <span class="card-tag">Brand Launch · Startup</span>
+        <h3 class="card-title"><a href="https://www.linkedin.com/company/dualsafe-private-limited/" target="_blank">DualSafe</a></h3>
+        <p class="card-company">DualSafe Private Limited</p>
+        <p class="card-desc">Built social media presence from scratch for a Shark Tank India 2022 finalist. Created content, coordinated shoots, drove cross-brand collaborations, and secured a full-page Silicon India Magazine feature.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAID MEDIA -->
+  <div class="work-panel" id="panel-paid">
+    <div class="work-grid">
+      <div class="work-card full-width reveal">
+        <div class="card-num">01</div>
+        <span class="card-tag">Paid Media · Enterprise Tech</span>
+        <h3 class="card-title">Supermicro (18Bn+ Market Cap)</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Wrote paid media copy in the form of statics, carousels and videos for global hardware launches featuring AI Factories by Supermicro and NVIDIA, Data Center Building Block Solutions&#174;, Sovereign AI for Telecom Industries and more. Crafted conversion-focused ad copy translating dense engineering specs into benefit-led messaging for enterprise decision-makers.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">02</div>
+        <span class="card-tag">Paid Media · Internal</span>
+        <h3 class="card-title">Zensciences (Internal Campaign)</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Developed paid copy across LinkedIn and Meta for Zensciences' own brand presence — positioning the agency across verticals, supporting lead generation, and communicating client wins.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- UI/UX & SEO -->
+  <div class="work-panel" id="panel-uiux">
+    <div class="work-grid">
+      <div class="work-card reveal">
+        <div class="card-num">01</div>
+        <span class="card-tag">SEO · Information Architecture</span>
+        <h3 class="card-title"><a href="https://synoptek.com/" target="_blank">Synoptek</a> — SEO &amp; IA Overhaul</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Led organic discoverability improvements through a systematic overhaul of Synoptek's Information Architecture, keyword strategy, and technical meta-tagging — improving site authority and search rankings for a global IT services company.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">02</div>
+        <span class="card-tag">Brand Book · UX Writing</span>
+        <h3 class="card-title"><a href="https://www.nurix.ai/" target="_blank">Nurix AI</a> — Brand Book &amp; Website UX</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Authored the definitive brand book for Nurix AI — establishing voice, tone, and narrative for an enterprise-grade agentic AI company. Led the UX revamp, transforming complex technical offerings into intuitive, conversion-focused digital journeys.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW BUSINESS PITCHES -->
+  <div class="work-panel" id="panel-pitches">
+    <div class="work-grid">
+      <div class="work-card reveal">
+        <div class="card-num">01</div>
+        <span class="card-tag">Pitch · Enterprise Tech</span>
+        <h3 class="card-title">Supermicro — AI Factory Narrative</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Authored the core pitch narrative repositioning Supermicro from a component manufacturer to the definitive architect of an AI Factory. Led creative visualization using 3D animations and concentric integration models to simplify the AI hardware story for C-suite audiences.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">02</div>
+        <span class="card-tag">Pitch · Industrial</span>
+        <h3 class="card-title">Cummins Aftermarket — Brand Story</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Directed creative strategy and authored high-impact advertising copy for Cummins Aftermarket — translating complex industrial narratives into engaging brand stories for a global engineering audience.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">03</div>
+        <span class="card-tag">Pitch · EdTech</span>
+        <h3 class="card-title">KnowledgeWorks — Pitch Narrative</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Translated complex client needs into a winning pitch narrative for KnowledgeWorks — structuring the strategic framework and scripting the creative direction from brief to final presentation.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">04</div>
+        <span class="card-tag">Pitch · Cybersecurity</span>
+        <h3 class="card-title">Qualys — New Business Pitch</h3>
+        <p class="card-company">Zensciences</p>
+        <p class="card-desc">Contributed to the new business pitch for Qualys, a leading cloud security platform — supporting creative scripting and strategic narrative development to win the account.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOURNALISM -->
+  <div class="work-panel" id="panel-journalism">
+    <div class="work-grid">
+      <div class="work-card reveal">
+        <div class="card-num">01</div>
+        <span class="card-tag">Journalism · Sports</span>
+        <h3 class="card-title"><a href="https://timesofindia.indiatimes.com/city/bengaluru/dps-boost-for-club-hockey-in-city/articleshow/101005826.cms" target="_blank">Times of India — Sports Section</a></h3>
+        <p class="card-company">TOI Bangalore · 2023</p>
+        <p class="card-desc">Authored two feature stories generating ₹12,90,000 in media value and 6,50,000 impressions. Covered DPS East Hockey Club's journey, represented TOI at high-profile press conferences, and conducted in-depth interviews with subject matter experts.</p>
+      </div>
+      <div class="work-card reveal">
+        <div class="card-num">02</div>
+        <span class="card-tag">Journalism · City</span>
+        <h3 class="card-title"><a href="https://timesofindia.indiatimes.com/city/bengaluru/womens-hockey-team-celebrates-intl-olympic-day-with-shelter-home-kids/articleshow/101265636.cms" target="_blank">Times of India — City Section</a></h3>
+        <p class="card-company">TOI Bangalore · 2023</p>
+        <p class="card-desc">Authored a city section feature on the Indian Women's Hockey Team's Olympic Day celebration — generating ₹5,10,000 in media value and 3,50,000 impressions. Also authored 10+ desk reports on local sports tournaments.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="reveal">
+    <h2 class="skills-title">What I<br><em style="font-style:italic; color:var(--red)">bring</em><br>to the table.</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-block reveal">
+      <div class="skill-cat">Writing & Copy</div>
+      <div class="skill-items">Campaign copy · Brand narratives · Video scripts · Thought leadership · Pitch decks · Brand books · SEO writing · Newsletters · Blogs</div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-cat">Strategy & Brand</div>
+      <div class="skill-items">Brand voice development · Launch narratives · Creative visualization · Campaign ideation · Storyboarding · Content strategy</div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-cat">Social & Growth</div>
+      <div class="skill-items">Community building · LinkedIn · YouTube · Content scheduling · Engagement strategy · Paid social · Analytics</div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-cat">Journalism</div>
+      <div class="skill-items">Feature writing · News reporting · Press conference coverage · Interviewing · Research-based writing · Multimedia production</div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-cat">Soft Skills</div>
+      <div class="skill-items">Stakeholder management · Cross-functional collaboration · Tight deadline delivery · Global client coordination · Proofreading</div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-cat">Tools</div>
+      <div class="skill-items">MS Office 365 · SharePoint · Figma · Canva · ClickUp · Google Analytics · AI-enabled workflows · SEO tools</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <h2 class="contact-title">Let's make something <em>worth reading.</em></h2>
+  </div>
+  <div class="contact-info reveal">
+    <div class="contact-item">
+      <div class="contact-label">Email</div>
+      <a href="mailto:anujsethi.2002@gmail.com">anujsethi.2002@gmail.com</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Phone</div>
+      <a href="tel:+919901933371">+91 9901933371</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">Location</div>
+      <a href="#">Bengaluru, India</a>
+    </div>
+    <div class="contact-item">
+      <div class="contact-label">LinkedIn</div>
+      <a href="https://www.linkedin.com/in/anuj-sethi-80057a21b/" target="_blank">linkedin.com/in/anuj-sethi</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Anuj Sethi</span>
+  <ul class="footer-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="https://www.linkedin.com/in/anuj-sethi-80057a21b/" target="_blank">LinkedIn</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 · Bengaluru</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.work-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById('panel-' + btn.dataset.tab);
+      panel.classList.add('active');
+      panel.querySelectorAll('.reveal').forEach(el => {
+        el.classList.remove('visible');
+        setTimeout(() => el.classList.add('visible'), 100);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
